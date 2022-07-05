@@ -92,14 +92,14 @@ const (
 const (
 	// ELF64Shdr.shType related constans
 	SHT_NULL     = 0
-	SHT_PROGBITS = 1
+	SHT_PROGBITS = 1 // e.g. for .comment, .data, .debug, etc sections
 	SHT_SYMTAB   = 2
 	SHT_STRTAB   = 3
 	SHT_RELA     = 4
 	SHT_HASH     = 5
 	SHT_DYNAMIC  = 6
 	SHT_NOTE     = 7
-	SHT_NOBITS   = 8
+	SHT_NOBITS   = 8 // e.g. for .bss section
 	SHT_REL      = 9
 	SHT_SHLIB    = 10
 	SHT_DYNSYM   = 11
@@ -115,12 +115,25 @@ const (
 	SHF_MASKPROC  = 0xf0000000
 )
 
+const (
+	// ELF64SymbolTable.stInfo related constants
+	STT_NOTYPE  = 0
+	STT_OBJECT  = 1
+	STT_FUNC    = 2
+	STT_SECTION = 3
+	STT_FILE    = 4
+	STT_COMMON  = 5
+	STB_LOCAL   = 0
+	STB_GLOBAL  = 1
+	STB_WEAK    = 2
+)
+
 func InitELF() {
 	fmt.Println("Hello From ELF!")
 }
 
 // ELF64Ehdr ELF header
-type ELF64Ehdr struct {
+type ELF64Header struct {
 	eIdent     [EI_INDENT]byte
 	eType      uint16
 	eMachine   uint16
@@ -138,7 +151,7 @@ type ELF64Ehdr struct {
 }
 
 // ELF64Phdr ELF Program header
-type ELF64Phdr struct {
+type ELF64ProgramHeader struct {
 	pType     uint32
 	pFlags    uint32
 	pOffset   Elf64_Off
@@ -150,7 +163,7 @@ type ELF64Phdr struct {
 }
 
 // ELF64Shdr ELF Section header
-type ELF64Shdr struct {
+type ELF64SectionHeader struct {
 	shName      uint32
 	shType      uint32
 	shFlags     uint32
@@ -161,4 +174,13 @@ type ELF64Shdr struct {
 	shInfo      uint32
 	shAddrAlign uint64
 	shEntSize   uint64
+}
+
+type ELF64SymbolTable struct {
+	stName    uint32
+	stInfo    byte
+	stOther   byte
+	stSHIndex uint16
+	stValue   Elf64_Addr
+	stSize    uint64
 }
