@@ -53,7 +53,7 @@ const (
 )
 
 const (
-	// Ehdr.eType related constants
+	// ELF64Ehdr.eType related constants
 
 	ET_NONE = 0 // unknown elf type
 	ET_REL  = 1 // relocatable elf file
@@ -67,12 +67,60 @@ const (
 	// TODO: Support more machine type
 )
 
+const (
+	// ELF64Phdr.pType related constants
+	PT_NULL      = 0
+	PT_LOAD      = 1
+	PT_DYNAMIC   = 2
+	PT_INTERP    = 3
+	PT_NOTE      = 4
+	PT_SHLIB     = 5
+	PT_PHDR      = 6
+	PT_LOPROC    = 0x70000000
+	PT_HIPROC    = 0x7fffffff
+	PT_LOOS      = 0x60000000
+	PT_GNU_STACK = PT_LOOS + 0x474e551
+)
+
+const (
+	// ELF64Phdr.pFlags related constans
+	PF_X = 0x1
+	PF_W = 0x2
+	PF_R = 0x4
+)
+
+const (
+	// ELF64Shdr.shType related constans
+	SHT_NULL     = 0
+	SHT_PROGBITS = 1
+	SHT_SYMTAB   = 2
+	SHT_STRTAB   = 3
+	SHT_RELA     = 4
+	SHT_HASH     = 5
+	SHT_DYNAMIC  = 6
+	SHT_NOTE     = 7
+	SHT_NOBITS   = 8
+	SHT_REL      = 9
+	SHT_SHLIB    = 10
+	SHT_DYNSYM   = 11
+	SHT_LOUSER   = 0x80000000
+	SHT_HIUSER   = 0xffffffff
+)
+
+const (
+	// ELF64Shdr.shFlags related constants
+	SHF_WRITE     = 0x1
+	SHF_ALLOC     = 0x2
+	SHF_EXECINSTR = 0x3
+	SHF_MASKPROC  = 0xf0000000
+)
+
 func InitELF() {
 	fmt.Println("Hello From ELF!")
 }
 
-// Ehdr ELF header
-type Ehdr struct {
+// ELF64Ehdr ELF header
+type ELF64Ehdr struct {
 	eIdent     [EI_INDENT]byte
 	eType      uint16
 	eMachine   uint16
@@ -81,10 +129,36 @@ type Ehdr struct {
 	ePHOff     Elf64_Off // Program Header Table Offset
 	eSHOff     Elf64_Off // Section Header Table Offset
 	eFlags     uint32
-	eEhSize    uint16
-	ePhEntSize uint16
-	ePhNum     uint16
-	eShentSize uint16
-	eShNum     uint16
-	eShStrndx  uint16
+	eEHSize    uint16 // ELF Header's Size
+	ePHEntSize uint16 // Program Header Entry Size
+	ePHNum     uint16 // Number of entries in program header table
+	eSHEntSize uint16 // Section Header Entry Size
+	eSHNum     uint16 // Number of entries in section header table
+	eSHStrNdx  uint16 // Section header table index of an entry
+}
+
+// ELF64Phdr ELF Program header
+type ELF64Phdr struct {
+	pType     uint32
+	pFlags    uint32
+	pOffset   Elf64_Off
+	pVAddr    Elf64_Addr
+	pPAddr    Elf64_Addr
+	pFileSize uint64
+	pMemSize  uint64
+	pAlign    uint64
+}
+
+// ELF64Shdr ELF Section header
+type ELF64Shdr struct {
+	shName      uint32
+	shType      uint32
+	shFlags     uint32
+	shAdrr      Elf64_Addr
+	shOffset    Elf64_Off
+	shSize      uint64
+	shLink      uint32
+	shInfo      uint32
+	shAddrAlign uint64
+	shEntSize   uint64
 }
