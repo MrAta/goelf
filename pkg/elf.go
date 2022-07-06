@@ -134,53 +134,53 @@ func InitELF() {
 
 // ELF64Ehdr ELF header
 type ELF64Header struct {
-	eIdent     [EI_INDENT]byte
-	eType      uint16
-	eMachine   uint16
-	eVersion   uint32
-	eEntry     Elf64_Addr
-	ePHOff     Elf64_Off // Program Header Table Offset
-	eSHOff     Elf64_Off // Section Header Table Offset
-	eFlags     uint32
-	eEHSize    uint16 // ELF Header's Size
-	ePHEntSize uint16 // Program Header Entry Size
-	ePHNum     uint16 // Number of entries in program header table
-	eSHEntSize uint16 // Section Header Entry Size
-	eSHNum     uint16 // Number of entries in section header table
-	eSHStrNdx  uint16 // Section header table index of an entry
+	Ident     [EI_INDENT]byte
+	Type      uint16
+	Machine   uint16
+	Version   uint32
+	Entry     Elf64_Addr
+	PHOff     Elf64_Off // Program Header Table Offset
+	SHOff     Elf64_Off // Section Header Table Offset
+	Flags     uint32
+	EHSize    uint16 // ELF Header's Size
+	PHEntSize uint16 // Program Header Entry Size
+	PHNum     uint16 // Number of entries in program header table
+	SHEntSize uint16 // Section Header Entry Size
+	SHNum     uint16 // Number of entries in section header table
+	SHStrNdx  uint16 // Section header table index of an entry
 }
 
 // ELF64Phdr ELF Program header
 type ELF64ProgramHeader struct {
-	pType     uint32
-	pFlags    uint32
-	pOffset   Elf64_Off
-	pVAddr    Elf64_Addr
-	pPAddr    Elf64_Addr
-	pFileSize uint64
-	pMemSize  uint64
-	pAlign    uint64
+	Type     uint32
+	Flags    uint32
+	Offset   Elf64_Off
+	VAddr    Elf64_Addr
+	PAddr    Elf64_Addr
+	FileSize uint64
+	MemSize  uint64
+	Align    uint64
 }
 
 // ELF64Shdr ELF Section header
 type ELF64SectionHeader struct {
-	shName      uint32
-	shType      uint32
-	shFlags     uint32
-	shAdrr      Elf64_Addr
-	shOffset    Elf64_Off
-	shSize      uint64
-	shLink      uint32
-	shInfo      uint32
-	shAddrAlign uint64
-	shEntSize   uint64
+	Name      uint32
+	Type      uint32
+	Flags     uint32
+	Addr      Elf64_Addr
+	Offset    Elf64_Off
+	Size      uint64
+	Link      uint32
+	Info      uint32
+	AddrAlign uint64
+	EntSize   uint64
 }
 
 type ELF64SymbolTable struct {
-	stName    uint32
-	stInfo    byte
-	stOther   byte
-	stSHIndex uint16
-	stValue   Elf64_Addr
-	stSize    uint64
+	Name    uint32
+	Info    byte
+	Other   byte
+	SHIndex uint16
+	Value   Elf64_Addr
+	Size    uint64
 }
