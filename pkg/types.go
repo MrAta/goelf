@@ -1,7 +1,7 @@
-package elf
+package elfreader
 
 type (
-	Elf64_Addr    uint16
+	Elf64_Addr    uint64
 	Elf64_Off     uint64
 	Elf64_Section uint16
 	Elf64_Versym  uint16
